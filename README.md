@@ -35,4 +35,3 @@
     # test coverage
     $ npm run test:cov
 
-#

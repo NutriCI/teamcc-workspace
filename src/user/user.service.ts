@@ -7,8 +7,7 @@ import { PrismaService } from "../common/prisma.service";
 import { UserValidation } from "./user.validation";
 import * as bcrypt from "bcrypt";
 import {v4 as uuid} from "uuid";
-import { User } from '@prisma/client';
-import { request } from 'express';
+import { User } from '@prisma/client'
 
 @Injectable()
 export class UserService {
@@ -114,6 +113,22 @@ export class UserService {
     return {
       name: result.name,
       username: result.username,
-    }
+    };
+  }
+
+  async logout (user: User): Promise<UserResponse> {
+    const result = await this.prismaService.user.update({
+      where: {
+        username: user.username,
+      },
+      data: {
+        token: null,
+      },
+    });
+
+    return {
+      username: result.username,
+      name: result.name,
+    };
   }
 }

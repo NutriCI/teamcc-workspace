@@ -122,7 +122,7 @@ describe('UserController', () => {
       await testService.createUser();
     });
 
-    it('should be rejected if token is invalid', async () => {
+    it('request ditolak jika token invalid', async () => {
       const response = await request(app.getHttpServer())
         .get('/api/users/current')
         .set('Authorization', 'wrong');
@@ -133,7 +133,7 @@ describe('UserController', () => {
       expect(response.body.errors).toBeDefined();
     });
 
-    it('should be able to get user', async () => {
+    it('bisa mendapatkan data user', async () => {
       const response = await request(app.getHttpServer())
         .get('/api/users/current')
         .set('Authorization', 'test');
@@ -143,6 +143,70 @@ describe('UserController', () => {
       expect(response.status).toBe(200);
       expect(response.body.data.username).toBe('test');
       expect(response.body.data.name).toBe('test');
+    });
+  });
+
+  describe('PATCH /api/users/current', () => {
+    beforeEach(async () => {
+      await testService.deleteUser();
+      await testService.createUser();
+    });
+
+    it('request ditolak jika data invalid', async () => {
+      const response = await request(app.getHttpServer())
+        .patch('/api/users/current')
+        .set('Authorization', 'test')
+        .send({
+          password: '',
+          name: '',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors).toBeDefined();
+    });
+
+    it('should be able update name', async () => {
+      const response = await request(app.getHttpServer())
+        .patch('/api/users/current')
+        .set('Authorization', 'test')
+        .send({
+          name: 'Muhammad Alif Fadillah',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.username).toBe('test');
+      expect(response.body.data.name).toBe('Muhammad Alif Fadillah');
+    });
+
+    it('bisa melakukan update password', async () => {
+      let response = await request(app.getHttpServer())
+        .patch('/api/users/current')
+        .set('Authorization', 'test')
+        .send({
+          password: 'alifmuhammad',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.username).toBe('test');
+      expect(response.body.data.name).toBe('test');
+
+      response = await request(app.getHttpServer())
+        .post('/api/users/login')
+        .send({
+          username: 'test',
+          password: 'alifmuhammad',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.token).toBeDefined();
     });
   });
 });

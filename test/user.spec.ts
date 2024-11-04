@@ -33,8 +33,9 @@ describe('UserController', () => {
       .post('/api/users')
       .send({
         username: '',
-        password: '',
+        email: '',
         name: '',
+        password: '',
       });
 
       logger.info(response.body);
@@ -48,8 +49,9 @@ describe('UserController', () => {
         .post('/api/users')
         .send({
           username: 'test',
-          password: 'test',
+          email: 'test@test.com',
           name: 'test',
+          password: 'test',
         });
 
       logger.info(response.body);
@@ -65,8 +67,9 @@ describe('UserController', () => {
         .post('/api/users')
         .send({
           username: 'test',
-          password: 'test',
+          email: 'test@test.com',
           name: 'test',
+          password: 'test',
         });
 
       logger.info(response.body);
@@ -75,5 +78,41 @@ describe('UserController', () => {
       expect(response.body.errors).toBeDefined()
     });
 
+  });
+
+  describe("POST /api/users/login", () => {
+    beforeEach(async () => {
+      await testService.deleteUser();
+      await testService.createUser();
+    })
+    it('request ditolak jika data invalid', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/api/users/login')
+        .send({
+          username: '',
+          password: '',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors).toBeDefined();
+    });
+
+    it('bisa melakukan login', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/api/users/login')
+        .send({
+          username: 'test',
+          password: 'test',
+        });
+
+      logger.info(response.body);
+
+      expect(response.status).toBe(200);
+      expect(response.body.data.username).toBe('test');
+      expect(response.body.data.name).toBe('test');
+      expect(response.body.data.token).toBeDefined();
+    });
   });
 });

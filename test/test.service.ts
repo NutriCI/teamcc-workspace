@@ -20,6 +20,7 @@ export class TestService {
       data: {
         username: 'test',
         name: 'test',
+        email: 'test@test.com',
         password: await bcrypt.hash('test', 10),
       }
     })

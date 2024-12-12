@@ -28,6 +28,11 @@
 
     $ npm install
 
+    # Prisma Client set up
+    $ npx prisma init 
+    $ npx prisma migrate dev
+    $ npx pisma generate
+
 ## Compile and run the project
 
 

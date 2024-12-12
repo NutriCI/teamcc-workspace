@@ -14,7 +14,7 @@
 
 ## Cloud Architecture
 <p align="center">
-  <a href="#" target="blank"><img src="https://res.cloudinary.com/dwm0tvqar/image/upload/v1734004301/project%20architecture.png" width="800" height="800" alt="Project Architecture" /></a>
+  <a href="#" target="blank"><img src="https://res.cloudinary.com/dwm0tvqar/image/upload/v1734004301/project%20architecture.png" width="1920" height="1080" alt="Project Architecture" /></a>
 </p>
 
 ## Project setup

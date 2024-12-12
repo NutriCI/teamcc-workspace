@@ -171,12 +171,14 @@ export class FoodsService {
     }
 
     try {
-      await this.prisma.foods.delete({
+      const deletedFood = await this.prisma.foods.delete({
         where: { id: foodId },
       });
 
+      console.log('Deleted Food:', deletedFood); // Debug
       return { message: 'Data berhasil dihapus' };
     } catch (error) {
+      console.error('Error in deleteFood:', error); // Debug
       this.throwError('Gagal menghapus makanan', 500, ['deleteFood']);
     }
   }

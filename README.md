@@ -3,6 +3,7 @@
 </br>
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  </br>
   <a href="https://cloud.google.com/" target="blank"><img src="https://res.cloudinary.com/dwm0tvqar/image/upload/v1734004521/gcp%20logo.png" width="120" alt="Google Cloud Logo " /></a>
 </p>
 
